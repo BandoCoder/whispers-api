@@ -7,15 +7,27 @@ const { NODE_ENV } = require("./config");
 
 //Import Routers
 const authRouter = require("./auth/auth-router");
-const usersRouter = require("./user/users-router");
+const usersRouter = require("./users/users-router");
 
 const app = express();
 
+//Morgan Options
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
+// ** Middleware **
+
+//Morgan for server logs during develoment
 app.use(morgan(morganOption));
+//Helmet for everything
 app.use(helmet());
+//Enable cors for ALL
 app.use(cors());
+
+// ** APP **
+
+//Initialize Routers
+app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
