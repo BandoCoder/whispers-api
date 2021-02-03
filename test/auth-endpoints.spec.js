@@ -4,7 +4,7 @@ const app = require("../src/app");
 const helpers = require("./helpers");
 const supertest = require("supertest");
 
-describe("Auth Endpoints", function () {
+describe.skip("Auth Endpoints", function () {
   let db;
 
   const { testUsers } = helpers.makeFixtures();

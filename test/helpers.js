@@ -114,11 +114,14 @@ function makeMaliciousPost() {
   const maliciousPost = {
     id: 111,
     title: 'malicious post title <script>alert("xss");</script>',
+    content: 'malicious content <script>alert("xss");</script>',
   };
 
   const expectedPost = {
     ...maliciousPost,
     title: 'malicious post title &lt;script&gt;alert("xss");&lt;/script&gt;',
+    content:
+      'malicious post content &lt;script&gt;alert("xss");&lt;/script&gt;',
   };
 
   return {

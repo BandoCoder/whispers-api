@@ -8,6 +8,7 @@ const { NODE_ENV } = require("./config");
 //Import Routers
 const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
+const postsRouter = require("./posts/posts-router");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(cors());
 //Initialize Routers
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
