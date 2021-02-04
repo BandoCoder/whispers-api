@@ -6,13 +6,20 @@ const PostsService = {
     return db.from("posts").select("*").limit(50);
   },
   getUserLikedPosts(db, user_id) {
-    return db.from("patterns").select("*").where({ user_id }).limit(50);
+    return db.from("posts").select("*").where({ user_id });
   },
   insertPost(db, post) {
-    return db.insert(post).into("posts").reurning("*").limit(50);
+    return db
+      .insert(post)
+      .into("posts")
+      .returning("*")
+      .then(([post]) => post);
   },
   removePost(db, id) {
     return db.from("posts").where({ id }).delete();
+  },
+  updatePost(db, id, updatedPost) {
+    return db("posts").where({ id }).update(updatedPost);
   },
 
   //Protect against cross site scripting

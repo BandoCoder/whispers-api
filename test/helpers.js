@@ -45,7 +45,14 @@ function makePostsArray() {
       title: "test-post-title-3",
       content: "test-post-content-3",
       date_created: "2029-01-22T16:28:32.615Z",
-      user_id: 3,
+      user_id: 2,
+    },
+    {
+      id: 4,
+      title: "test-post-title-4",
+      content: "test-post-content-4",
+      date_created: "2029-01-22T16:28:32.615Z",
+      user_id: null,
     },
   ];
 }
@@ -120,8 +127,7 @@ function makeMaliciousPost() {
   const expectedPost = {
     ...maliciousPost,
     title: 'malicious post title &lt;script&gt;alert("xss");&lt;/script&gt;',
-    content:
-      'malicious post content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    content: 'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
   };
 
   return {
