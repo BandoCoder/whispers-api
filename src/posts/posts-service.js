@@ -5,7 +5,7 @@ const PostsService = {
   getAllPosts(db) {
     return db.from("posts").select("*").limit(50);
   },
-  getUserLikedPosts(db, user_id) {
+  getUserPosts(db, user_id) {
     return db.from("posts").select("*").where({ user_id });
   },
   insertPost(db, post) {
@@ -18,9 +18,6 @@ const PostsService = {
   removePost(db, id) {
     return db.from("posts").where({ id }).delete();
   },
-  updatePost(db, id, updatedPost) {
-    return db("posts").where({ id }).update(updatedPost);
-  },
 
   //Protect against cross site scripting
   serializePost(post) {
@@ -28,7 +25,6 @@ const PostsService = {
       id: post.id,
       title: xss(post.title),
       content: xss(post.content),
-      user_id: post.user_id,
     };
   },
   serializeAllPosts(posts) {

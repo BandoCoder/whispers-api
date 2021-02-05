@@ -38,7 +38,7 @@ function makePostsArray() {
       title: "test-post-title-2",
       content: "test-post-content-2",
       date_created: "2029-01-22T16:28:32.615Z",
-      user_id: 2,
+      user_id: 1,
     },
     {
       id: 3,
@@ -49,10 +49,27 @@ function makePostsArray() {
     },
     {
       id: 4,
-      title: "test-post-title-4",
-      content: "test-post-content-4",
+      title: "test-post-title-3",
+      content: "test-post-content-3",
       date_created: "2029-01-22T16:28:32.615Z",
-      user_id: null,
+      user_id: 2,
+    },
+  ];
+}
+
+function makeLikesArray() {
+  return [
+    {
+      user_id: 1,
+      post_id: 1,
+    },
+    {
+      user_id: 1,
+      post_id: 2,
+    },
+    {
+      user_id: 1,
+      post_id: 3,
     },
   ];
 }
@@ -67,10 +84,18 @@ function makeExpectedPost(post) {
   };
 }
 
+function makeExpectedLike(like) {
+  return {
+    user_id: like.user_id,
+    post_id: like.post_id,
+  };
+}
+
 function makeFixtures() {
   const testUsers = makeUsersArray();
   const testPosts = makePostsArray();
-  return { testUsers, testPosts };
+  const testLikes = makeLikesArray();
+  return { testUsers, testPosts, testLikes };
 }
 
 function cleanTables(db) {
@@ -79,7 +104,8 @@ function cleanTables(db) {
       .raw(
         `TRUNCATE
         users,
-        posts
+        posts,
+        likes
       `
       )
       .then(() =>
@@ -106,10 +132,18 @@ function seedUsers(db, users) {
     );
 }
 
-function seedPosts(db, users, posts) {
+function seedLikes(db, likes) {
+  const preppedLikes = likes.map((like) => ({
+    ...like,
+  }));
+  return db.into("likes").insert(preppedLikes);
+}
+
+function seedPosts(db, users, likes, posts, userPosts) {
   return db.transaction(async (trx) => {
     await seedUsers(trx, users);
     await trx.into("posts").insert(posts);
+    await seedLikes(trx, likes);
 
     await trx.raw(`SELECT setval('posts_id_seq', ?)`, [
       posts[posts.length - 1].id,
@@ -122,6 +156,7 @@ function makeMaliciousPost() {
     id: 111,
     title: 'malicious post title <script>alert("xss");</script>',
     content: 'malicious content <script>alert("xss");</script>',
+    user_id: 3,
   };
 
   const expectedPost = {
@@ -155,6 +190,8 @@ module.exports = {
   cleanTables,
   seedUsers,
   seedPosts,
+  seedLikes,
+  makeExpectedLike,
   makeAuthHeader,
   makeMaliciousPost,
   seedMaliciousPost,

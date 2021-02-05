@@ -4,5 +4,5 @@ CREATE TABLE posts (
     content TEXT NOT NULL,
     date_created TIMESTAMPTZ DEFAULT now() NOT NULL,
     user_id INTEGER
-        REFERENCES users(id)
+        REFERENCES users(id) NOT NULL
 );

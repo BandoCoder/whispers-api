@@ -1,26 +1,148 @@
-# Express Boilerplate!
+# BAP API
 
-This is a boilerplate project used for starting new projects!
+## Auth
 
-## Set up
+| Method | Endpoint        | Usage               | Returns |
+| ------ | --------------- | ------------------- | ------- |
+| POST   | /api/auth/login | Authenticate a user | JWT     |
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+#### POST
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Endpoint for authenticating a user
 
-## Scripts
+##### Request Body
 
-Start the application `npm start`
+| Type | Fields              | Description                                    |
+| ---- | ------------------- | ---------------------------------------------- |
+| JSON | user_name, password | JSON containing a username and password string |
 
-Start nodemon for the application `npm run dev`
+##### Responses
 
-Run the tests `npm test`
+| Code | Description                                                    |
+| ---- | -------------------------------------------------------------- |
+| 200  | Receive JWT with authenticated user_name and id inside payload |
+| 400  | Missing '{user_name OR password}' in request body              |
+| 400  | Incorrect user_name or password                                |
 
-## Deploying
+## User Registration
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's main branch.
+| Method | Endpoint   | Usage    | Returns     |
+| ------ | ---------- | -------- | ----------- |
+| POST   | /api/users | Register | User Object |
+
+#### POST
+
+Endpoint for registering new users
+
+##### Request Body
+
+| Type | Fields                     | Description                                       |
+| ---- | -------------------------- | ------------------------------------------------- |
+| JSON | user_name, email, password | JSON containing username, email, password strings |
+
+##### Responses
+
+| Code | Description                                                  |
+| ---- | ------------------------------------------------------------ |
+| 201  | Respond with object containing user data                     |
+| 400  | Missing '{user_name OR email OR password}' in request body   |
+| 400  | Error response object containing a validation error messages |
+
+## Posts Endpoints
+
+| Method | Endpoint                  | Usage                        | Returns        |
+| ------ | ------------------------- | ---------------------------- | -------------- |
+| POST   | /api/posts                | Create new post              | Post Object    |
+| GET    | /api/posts                | Get all posts                | Post Object    |
+| PATCH  | /api/posts/{id}           | Like a post(updates user_id) | Empty Response |
+| GET    | /api/posts/user/{user_id} | Get all Posts for a user     | Array of Posts |
+
+**Authorization required for all endpoints**
+
+#### POST
+
+Create new pattern
+
+##### Request Body
+
+| Type | Fields              | Description                                                                                                                                                                                     |
+| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JSON | title, pattern_data | pattern_data should be an object containing fields for 'bpm' and 'notes', an array of notes where notes are represented as a pair of time and key strings inside an array (ex. ['1:0:0', 'C4']) |
+
+##### Responses
+
+| Code | Description                                                          |
+| ---- | -------------------------------------------------------------------- |
+| 201  | Respond with pattern object and append pattern id to location header |
+| 400  | Missing '{title OR pattern_data}' in request body                    |
+| 401  | Unauthorized Request                                                 |
+
+### `/api/patterns/:patternid`
+
+##### Path parameters
+
+| Path parameter | Value             |
+| -------------- | ----------------- |
+| patternid      | Unique pattern id |
+
+#### GET
+
+Returns an object containing all pattern data
+
+##### Responses
+
+| Code | Description                 |
+| ---- | --------------------------- |
+| 200  | Respond with pattern object |
+| 404  | Pattern doesn't exist       |
+| 401  | Unauthorized Request        |
+
+#### DELETE
+
+Delete an existing pattern
+
+##### Responses
+
+| Code | Description           |
+| ---- | --------------------- |
+| 204  | No response           |
+| 404  | pattern doesn't exist |
+| 401  | Unauthorized Request  |
+
+#### PATCH
+
+Edit an existing pattern
+
+##### Request Body
+
+| Type | Fields                | Description                                                                                                                                                                                     |
+| ---- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JSON | title OR pattern_data | pattern_data should be an object containing fields for 'bpm' and 'notes', an array of notes where notes are represented as a pair of time and key strings inside an array (ex. ['1:0:0', 'C4']) |
+
+##### Responses
+
+| Code | Description           |
+| ---- | --------------------- |
+| 204  | No response           |
+| 404  | Pattern doesn't exist |
+| 401  | Unauthorized Request  |
+
+### `/api/patterns/user/:userid`
+
+#### GET
+
+Returns an array of objects containing all of the
+patterns beloning to user with id of `:userid`
+
+##### Path parameters
+
+| Path parameter | Value          |
+| -------------- | -------------- |
+| userid         | Unique user id |
+
+##### Responses
+
+| Code | Description                   |
+| ---- | ----------------------------- |
+| 200  | Respond with array of objects |
+| 401  | Unauthorized Request          |
