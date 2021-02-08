@@ -7,6 +7,10 @@ const LikesService = {
       .where("likes.user_id", currUserId);
   },
 
+  countLikesByPost(db, post_id) {
+    return db.count("id").from("likes").where({ post_id });
+  },
+
   insertLike(db, like) {
     return db
       .insert(like)
