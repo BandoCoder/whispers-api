@@ -3,7 +3,11 @@ const { serializeUser } = require("../users/users-service");
 
 const PostsService = {
   getAllPosts(db) {
-    return db.from("posts").select("*").limit(50);
+    return db
+      .from("posts")
+      .select("*")
+      .orderBy("date_created", "desc")
+      .limit(50);
   },
   getUserPosts(db, user_id) {
     return db.from("posts").select("*").where({ user_id });
