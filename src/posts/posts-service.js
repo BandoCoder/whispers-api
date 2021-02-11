@@ -25,6 +25,7 @@ const PostsService = {
       id: post.id,
       title: xss(post.title),
       content: xss(post.content),
+      date_created: post.date_created,
     };
   },
   serializeAllPosts(posts) {
