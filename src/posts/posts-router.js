@@ -36,11 +36,38 @@ postsRouter
   })
   .post(jsonParser, (req, res, next) => {
     const currentUserId = req.user.id;
-    const { title, content, user_id } = req.body;
-    const newPost = { title, content, user_id };
+    const {
+      title,
+      content,
+      img_url,
+      img_photographer,
+      portfolio_url,
+      img_dwn_link,
+      img_alt,
+      user_id,
+    } = req.body;
+    const newPost = {
+      title,
+      content,
+      img_url,
+      img_photographer,
+      portfolio_url,
+      img_dwn_link,
+      img_alt,
+      user_id,
+    };
 
     //Validate
-    for (const field of ["title", "content", "user_id"])
+    for (const field of [
+      "title",
+      "content",
+      "img_url",
+      "img_photographer",
+      "portfolio_url",
+      "img_dwn_link",
+      "img_alt",
+      "user_id",
+    ])
       if (!req.body[field])
         return res.status(400).json({
           error: `Missing '${field}', in request body`,

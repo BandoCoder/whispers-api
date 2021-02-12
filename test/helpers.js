@@ -30,6 +30,12 @@ function makePostsArray() {
       id: 1,
       title: "test-post-title-1",
       content: "test-post-content-1",
+      img_url:
+        "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+      img_photographer: "Solen Feyissa",
+      portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+      img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+      img_alt: "pink and white abstract painting",
       date_created: "2029-01-22T16:28:32.615Z",
       user_id: 1,
     },
@@ -37,6 +43,12 @@ function makePostsArray() {
       id: 2,
       title: "test-post-title-2",
       content: "test-post-content-2",
+      img_url:
+        "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+      img_photographer: "Solen Feyissa",
+      portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+      img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+      img_alt: "pink and white abstract painting",
       date_created: "2029-01-22T16:28:32.615Z",
       user_id: 1,
     },
@@ -44,6 +56,12 @@ function makePostsArray() {
       id: 3,
       title: "test-post-title-3",
       content: "test-post-content-3",
+      img_url:
+        "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+      img_photographer: "Solen Feyissa",
+      portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+      img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+      img_alt: "pink and white abstract painting",
       date_created: "2029-01-22T16:28:32.615Z",
       user_id: 2,
     },
@@ -51,6 +69,12 @@ function makePostsArray() {
       id: 4,
       title: "test-post-title-3",
       content: "test-post-content-3",
+      img_url:
+        "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+      img_photographer: "Solen Feyissa",
+      portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+      img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+      img_alt: "pink and white abstract painting",
       date_created: "2029-01-22T16:28:32.615Z",
       user_id: 2,
     },
@@ -79,6 +103,11 @@ function makeExpectedPost(post) {
     id: post.id,
     title: post.title,
     content: post.content,
+    img_url: post.img_url,
+    img_photographer: post.img_photographer,
+    portfolio_url: post.portfolio_url,
+    img_dwn_link: post.img_dwn_link,
+    img_alt: post.img_alt,
     date_created: post.date_created,
     user_id: post.user_id,
   };
@@ -156,6 +185,11 @@ function makeMaliciousPost() {
     id: 111,
     title: 'malicious post title <script>alert("xss");</script>',
     content: 'malicious content <script>alert("xss");</script>',
+    img_url: 'malicious content <script>alert("xss");</script>',
+    img_photographer: 'malicious content <script>alert("xss");</script>',
+    portfolio_url: 'malicious content <script>alert("xss");</script>',
+    img_dwn_link: 'malicious content <script>alert("xss");</script>',
+    img_alt: 'malicious content <script>alert("xss");</script>',
     user_id: 3,
   };
 
@@ -163,6 +197,14 @@ function makeMaliciousPost() {
     ...maliciousPost,
     title: 'malicious post title &lt;script&gt;alert("xss");&lt;/script&gt;',
     content: 'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    img_url: 'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    img_photographer:
+      'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    portfolio_url:
+      'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    img_dwn_link:
+      'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
+    img_alt: 'malicious content &lt;script&gt;alert("xss");&lt;/script&gt;',
   };
 
   return {

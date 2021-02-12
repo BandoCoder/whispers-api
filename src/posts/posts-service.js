@@ -32,6 +32,11 @@ const PostsService = {
       id: post.id,
       title: xss(post.title),
       content: xss(post.content),
+      img_url: xss(post.img_url),
+      img_photographer: xss(post.img_photographer),
+      portfolio_url: xss(post.portfolio_url),
+      img_dwn_link: xss(post.img_dwn_link),
+      img_alt: xss(post.img_alt),
       date_created: post.date_created,
     };
   },

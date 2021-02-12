@@ -43,11 +43,26 @@ describe("Post Endpoints", () => {
   describe("POST /api/posts/:user_id", () => {
     beforeEach(() => helpers.seedPosts(db, testUsers, testLikes, testPosts));
 
-    const requiredFields = ["title", "content", "user_id"];
+    const requiredFields = [
+      "title",
+      "content",
+      "img_url",
+      "img_photographer",
+      "portfolio_url",
+      "img_dwn_link",
+      "img_alt",
+      "user_id",
+    ];
     requiredFields.forEach((field) => {
       const newPost = {
         title: "test new post",
         content: "test new content",
+        img_url:
+          "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+        img_photographer: "Solen Feyissa",
+        portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+        img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+        img_alt: "pink and white abstract painting",
       };
 
       it(`responds 400 and error msg when '${field}' is missing`, () => {
