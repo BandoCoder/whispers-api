@@ -3,6 +3,7 @@ const LikesService = {
     return db
       .select("*")
       .from("likes")
+      .orderBy("date_created", "desc")
       .join("posts", "posts.id", "=", "likes.post_id")
       .where("likes.user_id", currUserId);
   },

@@ -10,7 +10,11 @@ const PostsService = {
       .limit(50);
   },
   getUserPosts(db, user_id) {
-    return db.from("posts").select("*").where({ user_id });
+    return db
+      .from("posts")
+      .select("*")
+      .orderBy("date_created", "desc")
+      .where({ user_id });
   },
   insertPost(db, post) {
     return db
