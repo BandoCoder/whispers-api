@@ -67,6 +67,12 @@ describe("Post Endpoints", () => {
       const newPost = {
         title: "test new post",
         content: "test new content",
+        img_url:
+          "https://images.unsplash.com/photo-1613072569184-2e7304cff8ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MXwyMDYyMTF8MHwxfGFsbHwyfHx8fHx8Mnw&ixlib=rb-1.2.1&q=80&w=400",
+        img_photographer: "Solen Feyissa",
+        portfolio_url: "https://api.unsplash.com/users/solenfeyissa/portfolio",
+        img_dwn_link: "https://api.unsplash.com/photos/nC2qCrKEUns/download",
+        img_alt: "pink and white abstract painting",
         user_id: 1,
       };
 

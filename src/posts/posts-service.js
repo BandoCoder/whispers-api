@@ -1,5 +1,4 @@
 const xss = require("xss");
-const { serializeUser } = require("../users/users-service");
 
 const PostsService = {
   getAllPosts(db) {
