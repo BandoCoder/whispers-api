@@ -6,7 +6,7 @@ const { requireAuth } = require("../jwt");
 
 unsplashRouter.route("/").get((req, res, next) => {
   UnsplashService.searchPhotos(req.query)
-    .then((response) => res.status(200).send(response))
+    .then((response) => res.status(200).send(response.results))
     .catch(next);
 });
 

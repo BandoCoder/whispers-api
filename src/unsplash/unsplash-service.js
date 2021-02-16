@@ -1,10 +1,10 @@
 const config = require("../config");
 const fetch = require("node-fetch");
+const { search } = require("./unsplash-router");
 
 const UnsplashService = {
   searchPhotos(searchQuery) {
-    console.log(searchQuery);
-    return fetch(`${config.UNSPLASH_URL}?query=${searchQuery}`, {
+    return fetch(`${config.UNSPLASH_URL}?query=${searchQuery.query}`, {
       headers: {
         Authorization: `${config.UNSPLASH_CLIENT_ID}`,
         "Accept-Version": "v1",
