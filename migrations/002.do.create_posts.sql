@@ -4,7 +4,7 @@ CREATE TABLE posts (
     content TEXT NOT NULL,
     img_url TEXT NOT NULL,
     img_photographer TEXT NOT NULL,
-    portfolio_url TEXT NOT NULL,
+    portfolio_url TEXT,
     img_dwn_link TEXT NOT NULL,
     img_alt TEXT NOT NULL,
     date_created TIMESTAMPTZ DEFAULT now() NOT NULL,
