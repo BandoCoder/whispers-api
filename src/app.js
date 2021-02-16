@@ -10,6 +10,7 @@ const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
 const postsRouter = require("./posts/posts-router");
 const likesRouter = require("./likes/likes-router");
+const unsplashRouter = require("./unsplash/unsplash-router");
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
 app.use("/api/likes", likesRouter);
+app.use("/api/photos", unsplashRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
