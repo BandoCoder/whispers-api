@@ -25,6 +25,9 @@ const PostsService = {
   removePost(db, id) {
     return db.from("posts").where({ id }).delete();
   },
+  countLikesByPost(db, post_id) {
+    return db.count("post_id").from("likes").where({ post_id });
+  },
 
   //Protect against cross site scripting
   serializePost(post) {
