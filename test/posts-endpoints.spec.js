@@ -35,7 +35,6 @@ describe("Post Endpoints", () => {
           expect(res.body[0]).to.have.property("id");
           expect(res.body[0].title).to.eql(expectedArray[0].title);
           expect(res.body[0].content).to.eql(expectedArray[0].content);
-          // expect(res.body[0].user_id).to.eql(expectedArray[0].user_id);
         });
     });
   });

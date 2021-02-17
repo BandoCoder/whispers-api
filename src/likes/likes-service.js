@@ -14,6 +14,9 @@ const LikesService = {
       .returning("*")
       .then(([like]) => like);
   },
+  getAllLikes(db) {
+    return db.select("*").from("likes");
+  },
 };
 
 module.exports = LikesService;

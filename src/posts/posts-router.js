@@ -5,7 +5,6 @@ const PostsService = require("./posts-service");
 const postsRouter = express.Router();
 const jsonParser = express.json();
 const { requireAuth } = require("../jwt");
-const LikesService = require("../likes/likes-service");
 
 // ** Posts endpoints **
 
@@ -81,13 +80,17 @@ postsRouter
       .then((post) => {
         res.status(201).json(PostsService.serializePost(post));
       })
+      .then(() => PostsService.triggerDownload(newPost.img_dwn_link))
+      .then(() => res.status(200))
       .catch(next);
   });
 
 postsRouter.route("/countlikes/:post_id").get((req, res, next) => {
   const currentPost = req.params.post_id;
   PostsService.countLikesByPost(req.app.get("db"), currentPost)
-    .then((count) => res.status(200).json(count[0]))
+    .then((count) => {
+      res.status(200).json(count);
+    })
     .catch(next);
 });
 

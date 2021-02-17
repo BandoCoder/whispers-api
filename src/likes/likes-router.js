@@ -5,6 +5,12 @@ const likesRouter = express.Router();
 const jsonParser = express.json();
 const { requireAuth } = require("../jwt");
 
+likesRouter.route("/").get((req, res, next) => {
+  LikesService.getAllLikes(req.app.get("db"))
+    .then((likes) => res.status(200).json(likes))
+    .catch(next);
+});
+
 likesRouter
   .route("/:user_id")
   .all(requireAuth)
