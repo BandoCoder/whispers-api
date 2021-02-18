@@ -47,7 +47,6 @@ describe("Post Endpoints", () => {
       "content",
       "img_url",
       "img_photographer",
-      "portfolio_url",
       "img_dwn_link",
       "img_alt",
       "user_id",

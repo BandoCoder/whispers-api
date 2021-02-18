@@ -1,4 +1,4 @@
-# BAP API
+# WHISPERS API
 
 ## Auth
 
@@ -50,99 +50,128 @@ Endpoint for registering new users
 
 ## Posts Endpoints
 
-| Method | Endpoint                  | Usage                        | Returns        |
-| ------ | ------------------------- | ---------------------------- | -------------- |
-| POST   | /api/posts                | Create new post              | Post Object    |
-| GET    | /api/posts                | Get all posts                | Post Object    |
-| PATCH  | /api/posts/{id}           | Like a post(updates user_id) | Empty Response |
-| GET    | /api/posts/user/{user_id} | Get all Posts for a user     | Array of Posts |
+| Method | Endpoint             | Usage                    | Returns             |
+| ------ | -------------------- | ------------------------ | ------------------- |
+| POST   | /api/posts           | Create new post          | Post object         |
+| GET    | /api/posts           | Get all posts            | Array of posts      |
+| GET    | /api/posts/{user_id} | Get all Posts for a user | Array of user posts |
 
 **Authorization required for all endpoints**
 
 #### POST
 
-Create new pattern
+Create new post
 
 ##### Request Body
 
-| Type | Fields              | Description                                                                                                                                                                                     |
-| ---- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| JSON | title, pattern_data | pattern_data should be an object containing fields for 'bpm' and 'notes', an array of notes where notes are represented as a pair of time and key strings inside an array (ex. ['1:0:0', 'C4']) |
+| Type | Fields                                                                                   | Description                                                                |
+| ---- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| JSON | title, content, img_url, img_photographer, portfolio_url, img_dwn_link, img_alt, user_id | Should be a json object, each field is required except for "portfolio_url" |
 
 ##### Responses
 
-| Code | Description                                                          |
-| ---- | -------------------------------------------------------------------- |
-| 201  | Respond with pattern object and append pattern id to location header |
-| 400  | Missing '{title OR pattern_data}' in request body                    |
-| 401  | Unauthorized Request                                                 |
+| Code | Description                                                                                                       |
+| ---- | ----------------------------------------------------------------------------------------------------------------- |
+| 201  | Respond with post object and append user_id of the post to location.                                              |
+| 400  | Missing '{title OR content OR img_url OR img_photographer OR img_dwn_link OR img_alt OR user_id}' in request body |
+| 401  | Unauthorized Request                                                                                              |
 
-### `/api/patterns/:patternid`
-
-##### Path parameters
-
-| Path parameter | Value             |
-| -------------- | ----------------- |
-| patternid      | Unique pattern id |
+#### `api/posts`
 
 #### GET
 
-Returns an object containing all pattern data
+Returns an array of post object
 
 ##### Responses
 
-| Code | Description                 |
-| ---- | --------------------------- |
-| 200  | Respond with pattern object |
-| 404  | Pattern doesn't exist       |
-| 401  | Unauthorized Request        |
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| 200  | Respond with array of post objects                 |
+| 404  | Not Found (if this happens, your request is wrong) |
+| 401  | Unauthorized Request                               |
 
-#### DELETE
+#### `api/posts/:userId`
 
-Delete an existing pattern
+#### GET
+
+Returns an array of post object for user
 
 ##### Responses
 
-| Code | Description           |
-| ---- | --------------------- |
-| 204  | No response           |
-| 404  | pattern doesn't exist |
-| 401  | Unauthorized Request  |
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| 200  | Respond with array of post objects for user        |
+| 404  | Not Found (if this happens, your request is wrong) |
+| 401  | Unauthorized Request                               |
 
-#### PATCH
+## Likes Endpoints
 
-Edit an existing pattern
+| Method | Endpoint             | Usage                    | Returns                    |
+| ------ | -------------------- | ------------------------ | -------------------------- |
+| POST   | /api/likes           | Create new like          | Array of users liked posts |
+| GET    | /api/likes/{user_id} | Get all Posts for a user | Array of users liked posts |
+
+**Authorization required for all endpoints**
+
+#### POST
+
+Create new Like
 
 ##### Request Body
 
-| Type | Fields                | Description                                                                                                                                                                                     |
-| ---- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| JSON | title OR pattern_data | pattern_data should be an object containing fields for 'bpm' and 'notes', an array of notes where notes are represented as a pair of time and key strings inside an array (ex. ['1:0:0', 'C4']) |
+| Type | Fields           | Description                                     |
+| ---- | ---------------- | ----------------------------------------------- |
+| JSON | user_id, post_id | Should be a json object, each field is required |
 
 ##### Responses
 
-| Code | Description           |
-| ---- | --------------------- |
-| 204  | No response           |
-| 404  | Pattern doesn't exist |
-| 401  | Unauthorized Request  |
+| Code | Description                                  |
+| ---- | -------------------------------------------- |
+| 201  | Respond with array of users liked posts      |
+| 400  | Missing '{user_id, post_id}' in request body |
+| 401  | Unauthorized Request                         |
 
-### `/api/patterns/user/:userid`
+#### `api/likes/`
 
 #### GET
 
-Returns an array of objects containing all of the
-patterns beloning to user with id of `:userid`
-
-##### Path parameters
-
-| Path parameter | Value          |
-| -------------- | -------------- |
-| userid         | Unique user id |
+Returns an array of posts objects
 
 ##### Responses
 
-| Code | Description                   |
-| ---- | ----------------------------- |
-| 200  | Respond with array of objects |
-| 401  | Unauthorized Request          |
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| 200  | Respond with array of post objects                 |
+| 404  | Not Found (if this happens, your request is wrong) |
+| 401  | Unauthorized Request                               |
+
+#### `api/likes/:userId`
+
+#### GET
+
+Returns an array of posts liked by user
+
+##### Responses
+
+| Code | Description                                        |
+| ---- | -------------------------------------------------- |
+| 200  | Respond with array of post objects for user likes  |
+| 404  | Not Found (if this happens, your request is wrong) |
+| 401  | Unauthorized Request                               |
+
+## Unsplash Endpoints (proxy)
+
+This is an endpoint that allows you to query the unsplash api for photos.
+
+**You must apply for your own CLIENT ID through unsplash**
+[Refer to the Unsplash API documentation by clicking here!](https://unsplash.com/documentation)
+
+#### Api Endpoint Url
+
+https://api.unsplash.com/search/photos
+
+| Method | Endpoint                     | Usage             | Returns         |
+| ------ | ---------------------------- | ----------------- | --------------- |
+| GET    | /photos?query=${searchQuery} | Search for photos | Array of photos |
+
+There is no delete endpoint. You must use sql to delete.

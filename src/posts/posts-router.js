@@ -85,13 +85,4 @@ postsRouter
       .catch(next);
   });
 
-postsRouter.route("/countlikes/:post_id").get((req, res, next) => {
-  const currentPost = req.params.post_id;
-  PostsService.countLikesByPost(req.app.get("db"), currentPost)
-    .then((count) => {
-      res.status(200).json(count);
-    })
-    .catch(next);
-});
-
 module.exports = postsRouter;
