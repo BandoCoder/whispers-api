@@ -1,7 +1,8 @@
 require("dotenv").config();
-const pg = require("pg");
-pg.defaults.ssl =
-  process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false;
+if (process.env.NODE_ENV === "production") {
+  const pg = require("pg");
+  pg.defaults.ssl = { rejectUnauthorized: false };
+}
 module.exports = {
   migrationsDirectory: "migrations",
   driver: "pg",
