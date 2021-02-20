@@ -49,7 +49,7 @@ authRouter.post("/login", jsonParser, (req, res, next) => {
 });
 
 //Refresh JWT
-authRouter.post("/refresh", requireAuth, (req, res) => {
+authRouter.put("/refresh", requireAuth, (req, res) => {
   const sub = req.user.user_name;
   const payload = { user_id: req.user.id };
   res.send({
