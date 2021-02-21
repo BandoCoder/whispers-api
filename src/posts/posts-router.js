@@ -83,6 +83,17 @@ postsRouter
       .then(() => PostsService.triggerDownload(newPost.img_dwn_link))
       .then(() => res.status(200))
       .catch(next);
+  })
+  .route("/:post_id")
+  .delete((req, res, next) => {
+    //Knex instance
+    let db = req.app.get("db");
+
+    PostsService.removePattern(db, req.params.post_id)
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
   });
 
 module.exports = postsRouter;

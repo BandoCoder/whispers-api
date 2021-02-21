@@ -1,5 +1,11 @@
 # WHISPERS API
 
+This is an api used to service the application called "Whispers". A user can post a whisper, and it saves it to a database on heroku.
+
+[Live app]https://whispers.bandocoder.vercel.app/
+
+[Client repository]https://github.com/BandoCoder/whispers-client
+
 ## Auth
 
 | Method | Endpoint        | Usage               | Returns |
@@ -175,3 +181,17 @@ https://api.unsplash.com/search/photos
 | GET    | /photos?query=${searchQuery} | Search for photos | Array of photos |
 
 There is no delete endpoint. You must use sql to delete.
+
+## Tech
+
+Node.js
+
+Express
+
+Knex
+
+Postgres
+
+SQL
+
+Postgrator
